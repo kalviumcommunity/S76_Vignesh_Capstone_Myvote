@@ -2,7 +2,7 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const superagent = require('superagent');
 const router = express.Router();
-const User = require('../models/userSchema');
+const User = require('../model/adminSchema');
 const { setOtp, getOtp, deleteOtp } = require('../middleware/otpStore');
 const jwt = require('jsonwebtoken');
 
