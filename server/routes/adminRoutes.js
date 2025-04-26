@@ -2,11 +2,8 @@ const express = require('express');
 const { body, validationResult } = require('express-validator');
 const router = express.Router();
 const User = require('../models/userSchema');
+const jwt = require('jsonwebtoken');
 
-
-
-const BREVO_API_KEY = process.env.BREVO_API_KEY;
-const FROM_EMAIL = process.env.FROM_EMAIL;
 
 
 router.post(
@@ -144,7 +141,13 @@ router.post('/login', async (req, res) => {
     if (user.password !== password) {   // Replace with proper password hashing in production
       return res.status(400).json({ success: false, message: 'Invalid password' });
     }
-    
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
+    res.cookie('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // Set to true in production
+      sameSite: 'Lax',
+    });
+    console.log(res.cookie.token);
     res.json({ success: true, message: 'Login successful', token });
   } catch (error) {
     console.error('Login error:', error);
