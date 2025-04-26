@@ -1,9 +1,13 @@
 const express = require('express');
 const { body, validationResult } = require('express-validator');
+const superagent = require('superagent');
 const router = express.Router();
 const User = require('../models/userSchema');
+const { setOtp, getOtp, deleteOtp } = require('../middleware/otpStore');
 const jwt = require('jsonwebtoken');
 
+const BREVO_API_KEY = process.env.BREVO_API_KEY;
+const FROM_EMAIL = process.env.FROM_EMAIL;
 
 
 router.post(
