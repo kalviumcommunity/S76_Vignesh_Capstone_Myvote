@@ -76,7 +76,7 @@ const Login = () => {
             </div>
             <div className='flex items-center justify-between w-full px-10 pb-4 mt-4'>
               <p className='text-sm'>Don't have an account? <span  onClick={() => navigate('/signup')} className='text-blue-500 cursor-pointer hover:underline'>Sign Up</span></p>
-              <p className='text-sm cursor-pointer hover:underline'>Forgot Password</p>
+              <p className='text-sm cursor-pointer hover:underline' onClick={() => navigate('/forgot-password')}>Forgot Password</p>
             </div>
             <button className='bg-[#080064] text-white font-bold py-2 px-4 rounded-lg w-[150px]  h-12 mt-4 text-lg' onClick={handleLogin}>
               Login

@@ -160,7 +160,8 @@ router.post('/login', async (req, res) => {
     if (!user.isVerified) {
       return res.status(400).json({ success: false, message: 'User not verified' });
     }
-    if (user.password !== password) {   // Replace with proper password hashing in production
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
       return res.status(400).json({ success: false, message: 'Invalid password' });
     }
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
