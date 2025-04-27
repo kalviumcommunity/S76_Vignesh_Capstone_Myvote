@@ -4,6 +4,7 @@ const superagent = require('superagent');
 const router = express.Router();
 const User = require('../model/adminSchema');
 const { setOtp, getOtp, deleteOtp } = require('../middleware/otpStore');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const BREVO_API_KEY = process.env.BREVO_API_KEY;
@@ -24,7 +25,24 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
     try {
-      const user = new User(req.body);
+      const { firstName, lastName, username, email, mobile, password } = req.body;
+      const exisitingUser = await User.findOne({ email });
+      if (exisitingUser) {
+        return res.status(400).json({ message: 'User already exists' });
+      }
+
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      const user = new User(
+        {
+          firstName,
+          lastName,
+          username,
+          email,
+          mobile,
+          password: hashedPassword
+        }
+      );
       await user.save();
       res.status(201).json({ message: 'User registered successfully' });
     } catch (error) {
@@ -165,7 +183,9 @@ router.put('/forget-password', async(req,res)=>{
     if(!user){
       res.status(404).json({ success: false, message: 'User not found' });
     }
-    user.password = newPassword;
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
     await user.save();
     res.json({ success: true, message: 'Password updated successfully' });
   } catch (error) {
