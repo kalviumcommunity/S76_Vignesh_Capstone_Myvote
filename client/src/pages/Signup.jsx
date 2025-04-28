@@ -1,7 +1,7 @@
 import React, { useState ,useEffect } from 'react'
 import { FloatingDock } from '../components/FloatingDock'
 import { DotLottieReact } from '@lottiefiles/dotlottie-react'
-import signup from '../assets/images/Signup.lottie'
+import signup from '../assets/images/SignUp.lottie'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
