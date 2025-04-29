@@ -27,7 +27,7 @@ const Login = () => {
             .then(response => {
                 console.log(response.data)
                 toast.success('Login successful!')
-                navigate('/admin')
+                navigate('/admin', {state: {email: email}})
             }
             ).catch(error => {
                 console.error('Login error:', error)
