@@ -6,15 +6,22 @@ import { Eye, EyeOff } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'sonner'
 import axios from 'axios'
+import { useAuth } from '../context/AuthContext';
+import { useDispatch } from 'react-redux';
+import { setUserEmail } from '../redux/actions/userActions';
+
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false)
   const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
+    const { setIsLoggedIn } = useAuth();
+
 
     const handleLogin = () => {
-        if (!username || !password) {
+        if (!email || !password) {
           toast.error('Please fill in both fields.')
         } else {
             axios.post('http://localhost:8000/api/login', {
@@ -27,6 +34,8 @@ const Login = () => {
             .then(response => {
                 console.log(response.data)
                 toast.success('Login successful!')
+                setIsLoggedIn(true);
+                dispatch(setUserEmail(email));
                 navigate('/admin', {state: {email: email}})
             }
             ).catch(error => {

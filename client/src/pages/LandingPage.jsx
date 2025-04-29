@@ -127,8 +127,8 @@ const LandingPage = () => {
             </div>
             <div className='flex flex-col sm:flex-row items-center justify-center gap-8 mt-8 md:mt-0'>
                 <div className='flex flex-col items-center justify-center'>
-                    <p className='text-white text-base md:text-lg font-bold'>New Election</p>
-                    <p className='text-white text-base md:text-lg font-bold'>Admin Login</p>
+                    <p className='text-white text-base md:text-lg font-bold' onClick={() => navigate('/login')}>New Election</p>
+                    <p className='text-white text-base md:text-lg font-bold' onClick={() => navigate('/login')}>Admin Login</p>
                     <p className='text-white text-base md:text-lg font-bold' onClick={() => navigate('/vote')}>Vote</p>
                     <p className='text-white text-base md:text-lg font-bold'>Result</p>
                 </div>

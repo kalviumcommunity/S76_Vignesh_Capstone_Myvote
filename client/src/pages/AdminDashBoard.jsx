@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { FloatingDock } from '../components/FloatingDock'
 import Loader from '../components/Loder'
-import { useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import { IconLogout2 , IconPlus} from '@tabler/icons-react'
+import { IconLogout2 , IconPlus } from '@tabler/icons-react'
+import { useAuth } from '../context/AuthContext'
+import { useSelector } from 'react-redux'
 
 const AdminDashBoard = () => {
-  const location = useLocation()
-  const email = location.state?.email
+  const navigate = useNavigate()
+  const { logout } = useAuth()
+
   const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null) // 👈 added user state
+  const [user, setUser] = useState(null)
+
+  const email = useSelector((state) => state.user.email)
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
     }, 2000)
-
     return () => clearTimeout(timer)
   }, [])
 
@@ -23,10 +27,10 @@ const AdminDashBoard = () => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/dash/dash-user', {
-          params: { email },
+          params: { email },  // wrap email in object
           withCredentials: true
-        });
-        setUser(response.data) // 👈 set user data
+        })
+        setUser(response.data)
         console.log(response.data.firstName)
       } catch (error) {
         console.error('Failed to fetch user data:', error)
@@ -37,6 +41,15 @@ const AdminDashBoard = () => {
       fetchUserData()
     }
   }, [email])
+
+  const handleLogout = async () => {
+    try {
+      await logout()
+      navigate('/login')
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
 
   return (
     <>
@@ -57,9 +70,12 @@ const AdminDashBoard = () => {
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Voter List</h1>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Profile</h1>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Settings</h1>
-                <div className='w-[180px] h-[50px] bg-white flex justify-center items-center mt-40 rounded-lg gap-2'>
+                <div
+                  className='w-[180px] h-[50px] bg-white flex justify-center items-center mt-40 rounded-lg gap-2'
+                  onClick={handleLogout}
+                >
                   <h1 className='text-2xl font-bold text-black'>Logout</h1>
-                  <IconLogout2/>
+                  <IconLogout2 />
                 </div>
               </div>
             </div>
@@ -70,8 +86,11 @@ const AdminDashBoard = () => {
               </div>
               <div className='flex justify-center items-center gap-3'>
                 <div className='w-[150px] h-[150px] bg-blue-600 hover:scale-125 rounded-md'></div>
-                <div className='w-[150px] h-[150px] bg-green-500 hover:scale-125 preserve-3d flex justify-center items-center flex-col gap-3 p-3 rounded-md'>
-                  <IconPlus className='w-10 h-10'/>
+                <div
+                  className='w-[150px] h-[150px] bg-green-500 hover:scale-125 preserve-3d flex justify-center items-center flex-col gap-3 p-3 rounded-md'
+                  onClick={() => navigate('/new-election')}
+                >
+                  <IconPlus className='w-10 h-10' />
                   <p className='text-xl font-bold text-black'>New Election</p>
                 </div>
               </div>

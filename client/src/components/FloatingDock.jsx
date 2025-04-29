@@ -6,25 +6,14 @@ import {
   IconChartBar,
   IconInfoCircle,
   IconLayoutNavbarCollapse,
+  IconHome,
+  IconLogout2,
+  IconDashboardFilled
 } from "@tabler/icons-react";
-import {
-  AnimatePresence,
-  motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
-} from "framer-motion";
-
-import { cn } from "../lib/utils"
-
-const items = [
-  { title: "Home", href: "/", icon: <IconHome2 /> },
-  { title: "Vote", href: "vote", icon: <IconCheckupList /> },
-  { title: "Login", href: "login", icon: <IconLogin /> },
-  { title: "Result", href: "#result", icon: <IconChartBar /> },
-  { title: "About Us", href: "#about", icon: <IconInfoCircle /> },
-];
-
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { cn } from "../lib/utils";
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from "react-router-dom";
 
 export const FloatingDock = ({ desktopClassName, mobileClassName }) => {
   return (
@@ -35,9 +24,22 @@ export const FloatingDock = ({ desktopClassName, mobileClassName }) => {
   );
 };
 
-
 const FloatingDockMobile = ({ className }) => {
   const [open, setOpen] = useState(false);
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const items = [
+    isLoggedIn
+      ? { title: "Home", href: "/admin", icon: <IconDashboardFilled /> }
+      : { title: "Home", href: "/", icon: <IconHome /> },
+    { title: "Vote", href: "/vote", icon: <IconCheckupList /> },
+    isLoggedIn
+      ? { title: "Logout", action: () => logout(), icon: <IconLogout2 /> }
+      : { title: "Login", href: "/login", icon: <IconLogin /> },
+    { title: "Result", href: "#result", icon: <IconChartBar /> },
+    { title: "About Us", href: "#about", icon: <IconInfoCircle /> },
+  ];
 
   return (
     <div className={cn("fixed bottom-6 left-1/2 -translate-x-1/2 block md:hidden z-50", className)}>
@@ -64,12 +66,18 @@ const FloatingDockMobile = ({ className }) => {
                   damping: 20,
                 }}
               >
-                <a
-                  href={item.href}
+                <button
+                  onClick={() => {
+                    if (item.action) {
+                      item.action();
+                    } else if (item.href) {
+                      navigate(item.href);
+                    }
+                  }}
                   className="h-10 w-10 rounded-full bg-gray-50 dark:bg-neutral-900 flex items-center justify-center"
                 >
                   <div className="text-neutral-800 dark:text-white">{item.icon}</div>
-                </a>
+                </button>
               </motion.div>
             ))}
           </motion.div>
@@ -85,9 +93,22 @@ const FloatingDockMobile = ({ className }) => {
   );
 };
 
-
 const FloatingDockDesktop = ({ className }) => {
   const mouseX = useMotionValue(Infinity);
+  const { isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const items = [
+    isLoggedIn
+      ? { title: "Dashboard", href: "/admin", icon: <IconDashboardFilled /> }
+      : { title: "Home", href: "/", icon: <IconHome /> },
+    { title: "Vote", href: "/vote", icon: <IconCheckupList /> },
+    isLoggedIn
+      ? { title: "Logout", action: () => logout(), icon: <IconLogout2 /> }
+      : { title: "Login", href: "/login", icon: <IconLogin /> },
+    { title: "Result", href: "#result", icon: <IconChartBar /> },
+    { title: "About Us", href: "#about", icon: <IconInfoCircle /> },
+  ];
 
   return (
     <div className="w-full flex justify-center fixed bottom-6 left-0 z-50">
@@ -99,17 +120,30 @@ const FloatingDockDesktop = ({ className }) => {
           className
         )}
       >
-        {items.map((item) => (
-          <IconContainer mouseX={mouseX} key={item.title} {...item} />
-        ))}
+        {items.map((item) =>
+          item ? (
+            <IconContainer
+              key={item.title}
+              mouseX={mouseX}
+              {...item}
+              onClick={() => {
+                if (item.action) {
+                  item.action();
+                } else if (item.href) {
+                  navigate(item.href);
+                }
+              }}
+            />
+          ) : null
+        )}
       </motion.div>
     </div>
   );
 };
 
-
-function IconContainer({ mouseX, title, icon, href }) {
+function IconContainer({ mouseX, title, icon, href, action }) {
   const ref = useRef(null);
+  const navigate = useNavigate();
 
   const distance = useTransform(mouseX, (val) => {
     const bounds = ref.current?.getBoundingClientRect() ?? { x: 0, width: 0 };
@@ -131,7 +165,15 @@ function IconContainer({ mouseX, title, icon, href }) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <a href={href}>
+    <button
+      onClick={() => {
+        if (action) {
+          action();
+        } else if (href) {
+          navigate(href);
+        }
+      }}
+    >
       <motion.div
         ref={ref}
         style={{ width, height }}
@@ -158,6 +200,6 @@ function IconContainer({ mouseX, title, icon, href }) {
           {icon}
         </motion.div>
       </motion.div>
-    </a>
+    </button>
   );
 }
