@@ -1,6 +1,6 @@
 import React from 'react'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
-import {AdminDashBoard, LandingPage, Login, Signup, ForgetPassword} from './routes/Routes'
+import {AdminDashBoard, LandingPage, Login, Signup, ForgetPassword, Vote} from './routes/Routes'
 import { Toaster } from 'sonner'
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
         <Route path='/signup' element ={<Signup/>}/>
         <Route path='/admin' element ={<AdminDashBoard/>}/>
         <Route path='/forgot-password' element ={<ForgetPassword/>}/>
+        <Route path='/vote' element={<Vote/>}/>
       </Routes>
     </Router>
   )

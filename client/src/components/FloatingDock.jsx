@@ -19,7 +19,7 @@ import { cn } from "../lib/utils"
 
 const items = [
   { title: "Home", href: "/", icon: <IconHome2 /> },
-  { title: "Vote", href: "#vote", icon: <IconCheckupList /> },
+  { title: "Vote", href: "vote", icon: <IconCheckupList /> },
   { title: "Login", href: "login", icon: <IconLogin /> },
   { title: "Result", href: "#result", icon: <IconChartBar /> },
   { title: "About Us", href: "#about", icon: <IconInfoCircle /> },

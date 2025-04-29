@@ -44,7 +44,8 @@ const LandingPage = () => {
                     {/* Button at first */}
                     <div className='flex flex-col items-center justify-center'>
                         <div className='flex flex-col md:flex-row items-center justify-center gap-4 md:gap-9 m-4'>
-                            <button className='bg-[#080064] text-white w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg border-1 hover:scale-105'>
+                            <button className='bg-[#080064] text-white w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg border-1 hover:scale-105'
+                                    onClick={() => navigate('/vote')}>
                                 Vote Now
                             </button>
                             <button className='bg-white text-[#080064] w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg hover:scale-105'
@@ -95,7 +96,8 @@ const LandingPage = () => {
         
         {/* Second button */}
         <div className='flex flex-col sm:flex-row items-center justify-center relative m-5 gap-6'>
-            <button className='bg-[#080064] text-white w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg border-1 hover:scale-105'>
+            <button className='bg-[#080064] text-white w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg border-1 hover:scale-105'
+                onClick={() => navigate('/vote')}>
                 Vote Now
             </button>
             <button className='bg-white text-[#080064] w-[200px] h-[50px] text-xl md:text-2xl font-bold rounded-lg hover:scale-105'>
@@ -127,7 +129,7 @@ const LandingPage = () => {
                 <div className='flex flex-col items-center justify-center'>
                     <p className='text-white text-base md:text-lg font-bold'>New Election</p>
                     <p className='text-white text-base md:text-lg font-bold'>Admin Login</p>
-                    <p className='text-white text-base md:text-lg font-bold'>Vote</p>
+                    <p className='text-white text-base md:text-lg font-bold' onClick={() => navigate('/vote')}>Vote</p>
                     <p className='text-white text-base md:text-lg font-bold'>Result</p>
                 </div>
                 <div className='h-0.5 sm:h-[150px] w-[150px] sm:w-0.5 bg-white m-4'></div>
