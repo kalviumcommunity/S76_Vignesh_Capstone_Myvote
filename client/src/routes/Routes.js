@@ -5,7 +5,7 @@ import AdminDashBoard from '../pages/AdminDashBoard';
 import ForgetPassword from '../pages/ForgetPassword';
 import Vote from '../pages/Vote';
 import NewElection from '../pages/NewElection';
-import Elections from '../pages/Elections';
+// import Elections from '../pages/Elections';
 import EditElection from '../pages/EditElection';
 
 export{
@@ -16,6 +16,6 @@ export{
     ForgetPassword,
     Vote,
     NewElection,
-    Elections,
+    // Elections,
     EditElection
 }
