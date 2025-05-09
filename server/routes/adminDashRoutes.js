@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../model/adminSchema');
 const { param } = require('./adminRoutes');
 
+
 router.get('/dash-user',async(req,res)=>{
     const { email } = req.query;
 

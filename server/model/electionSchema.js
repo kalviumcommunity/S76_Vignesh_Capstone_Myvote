@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const candidateSchema = new mongoose.Schema({
   name: String,
   party: String,
-  age: Number,
+  symbol: String
 });
 
 const voterSchema = new mongoose.Schema({
@@ -15,6 +15,7 @@ const voterSchema = new mongoose.Schema({
 
 const electionSchema = new mongoose.Schema({
   electionId: { type: String, unique: true, required: true },
+  electionName: { type: String, unique: true, required: true },
   electionDate: { type: Date, required: true },
   startTime: { type: String, required: true },
   endTime: { type: String, required: true },
