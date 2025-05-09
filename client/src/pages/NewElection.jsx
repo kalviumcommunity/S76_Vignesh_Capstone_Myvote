@@ -5,6 +5,7 @@ import { FloatingDock } from '../components/FloatingDock'
 import { Trash2 } from 'lucide-react'
 import { IconFileExcel } from '@tabler/icons-react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const InputGroup = ({ label, type, id, name, value, onChange }) => (
   <div className='flex flex-col gap-2'>
@@ -21,6 +22,7 @@ const InputGroup = ({ label, type, id, name, value, onChange }) => (
 )
 
 const NewElection = () => {
+  const navigate = useNavigate();
   const [election, setElection] = useState({
     electionId: "",
     electionName: "",
@@ -130,6 +132,7 @@ const NewElection = () => {
       );
   
       alert("Election created successfully!");
+      navigate("/admin");
       console.log(response.data);
     } catch (error) {
       console.error("Error creating election:", error);

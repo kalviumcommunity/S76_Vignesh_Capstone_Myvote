@@ -13,6 +13,7 @@ const AdminDashBoard = () => {
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
+  const [electionCount , setElectionCount] = useState(0)
 
   const email = useSelector((state) => state.user.email)
 
@@ -41,6 +42,18 @@ const AdminDashBoard = () => {
       fetchUserData()
     }
   }, [email])
+
+  useEffect(() => {
+    const fetchElectionCount = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/dash/election-count')
+        setElectionCount(response.data)
+      } catch (error) {
+        console.error('Failed to fetch election count:', error)
+      }
+    }
+    fetchElectionCount()
+  }, [])
 
   const handleLogout = async () => {
     try {
@@ -82,7 +95,11 @@ const AdminDashBoard = () => {
             <div className='w-full h-full flex flex-col justify-center items-center gap-3'>
               <div className='flex justify-center items-center gap-3'>
                 <div className='w-[150px] h-[150px] bg-red-500 hover:scale-125 rounded-md'></div>
-                <div className='w-[150px] h-[150px] bg-violet-600 hover:scale-125 rounded-md'></div>
+                <div className='w-[150px] h-[150px] bg-violet-600 hover:scale-125 rounded-md flex justify-center items-center flex-col p-3 text-center'
+                      onClick={() => navigate('/elections')}>
+                  <h1 className='text-xl font-bold text-black'>Upcoming Elections</h1>
+                  <p className='text-5xl font-bold text-red-600'>{electionCount}</p>
+                </div>
               </div>
               <div className='flex justify-center items-center gap-3'>
                 <div className='w-[150px] h-[150px] bg-blue-600 hover:scale-125 rounded-md'></div>
