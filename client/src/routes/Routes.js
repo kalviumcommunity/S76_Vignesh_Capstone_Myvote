@@ -5,6 +5,8 @@ import AdminDashBoard from '../pages/AdminDashBoard';
 import ForgetPassword from '../pages/ForgetPassword';
 import Vote from '../pages/Vote';
 import NewElection from '../pages/NewElection';
+import Elections from '../pages/Elections';
+import EditElection from '../pages/EditElection';
 
 export{
     LandingPage,
@@ -13,5 +15,7 @@ export{
     AdminDashBoard,
     ForgetPassword,
     Vote,
-    NewElection
+    NewElection,
+    Elections,
+    EditElection
 }

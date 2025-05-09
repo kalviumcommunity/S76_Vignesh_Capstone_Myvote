@@ -8,7 +8,7 @@ const candidateSchema = new mongoose.Schema({
 });
 
 const voterSchema = new mongoose.Schema({
-  name: String,
+  votername: String,
   voterId: String,
   age: Number,
 });
