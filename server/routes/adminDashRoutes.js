@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../model/adminSchema');
 const { param } = require('./adminRoutes');
+const Election = require('../model/electionSchema');
+
 
 router.get('/dash-user',async(req,res)=>{
     const { email } = req.query;
@@ -11,9 +13,18 @@ router.get('/dash-user',async(req,res)=>{
         if(!user){
             res.status(404).json({ success: false, message: 'User not found' });
         }
-        // res.json({ success: true, user });
         res.send(user);
     } catch (error) {
+        console.log(error);
+    }
+})
+
+router.get('/election-count', async(req,res)=>{
+    try{
+        const today = new Date();
+        const count = await Election.countDocuments({ electionDate: { $gt: today } });
+        res.send(count);
+    }catch(error){
         console.log(error);
     }
 })
