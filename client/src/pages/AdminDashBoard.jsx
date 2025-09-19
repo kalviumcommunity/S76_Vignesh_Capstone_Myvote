@@ -78,7 +78,7 @@ const AdminDashBoard = () => {
             <div className='h-full w-[400px] flex justify-center items-center ml-9'>
               <div className='w-full h-full flex flex-col justify-start items-center bg-white/20 rounded-md gap-2 p-4'>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Live Status</h1>
-                <h1 className='text-2xl font-bold text-white cursor-pointer'>New Election</h1>
+                <h1 className='text-2xl font-bold text-white cursor-pointer' onClick={() => navigate('/new-election')}>New Election</h1>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Result</h1>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Voter List</h1>
                 <h1 className='text-2xl font-bold text-white cursor-pointer'>Profile</h1>
@@ -94,7 +94,9 @@ const AdminDashBoard = () => {
             </div>
             <div className='w-full h-full flex flex-col justify-center items-center gap-3'>
               <div className='flex justify-center items-center gap-3'>
-                <div className='w-[150px] h-[150px] bg-red-500 hover:scale-125 rounded-md'></div>
+                <div className='w-[150px] h-[150px] bg-red-500 hover:scale-125 rounded-md flex justify-center items-center '>
+                  <h1 className='text-2xl font-bold text-black'>Live Status</h1>
+                </div>
                 <div className='w-[150px] h-[150px] bg-violet-600 hover:scale-125 rounded-md flex justify-center items-center flex-col p-3 text-center'
                       onClick={() => navigate('/elections')}>
                   <h1 className='text-xl font-bold text-black'>Upcoming Elections</h1>
@@ -102,7 +104,9 @@ const AdminDashBoard = () => {
                 </div>
               </div>
               <div className='flex justify-center items-center gap-3'>
-                <div className='w-[150px] h-[150px] bg-blue-600 hover:scale-125 rounded-md'></div>
+                <div className='w-[150px] h-[150px] bg-blue-600 hover:scale-125 rounded-md flex justify-center items-center'>
+                  <h1 className='text-2xl font-bold text-black'>Result</h1>
+                </div>
                 <div
                   className='w-[150px] h-[150px] bg-green-500 hover:scale-125 preserve-3d flex justify-center items-center flex-col gap-3 p-3 rounded-md'
                   onClick={() => navigate('/new-election')}

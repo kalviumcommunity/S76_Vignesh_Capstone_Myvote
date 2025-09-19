@@ -9,7 +9,6 @@ const voteSchema = new mongoose.Schema({
   voterId: {
     type: String, 
     required: true,
-    unique: true, 
   },
   candidate: {
     name: String,
@@ -20,5 +19,8 @@ const voteSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+// Ensure a voter can vote only once per election (compound unique index)
+voteSchema.index({ electionId: 1, voterId: 1 }, { unique: true });
 
 module.exports = mongoose.model("Vote", voteSchema);
